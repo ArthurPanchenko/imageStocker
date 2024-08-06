@@ -2,3 +2,4 @@ __pycache__/
 media/
 config.py
 plan.txt
+db_config.py
