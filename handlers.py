@@ -5,9 +5,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.utils.chat_action import ChatActionSender
 
 import text
+import keyboards
 from services.generate_image import generate_image
-from keyboards import start_keyboard
-from db.scripts import create_picture_db
+from db.scripts import create_picture_db, get_picture_by_id
 from states import CreatePicture
 
 
@@ -16,7 +16,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def start_handler(msg: Message, state: FSMContext):
-    await msg.answer(text.greeting_text, reply_markup=start_keyboard)
+    await msg.answer(text.greeting_text, reply_markup=keyboards.start_keyboard)
     await state.set_state(CreatePicture.picture_quote)
 
 
@@ -42,3 +42,19 @@ async def name_generated_picture(msg: Message, state: FSMContext):
 
     await msg.answer_photo(image, caption=text.named_picture_caption.format(title))
     await state.set_state(CreatePicture.picture_quote)
+
+
+@router.callback_query(F.data == 'list_pictures')
+async def my_pictures(call: CallbackQuery):
+    await call.message.answer(text.my_pictures_text, reply_markup=keyboards.my_pictures_keyboard_builder(call.from_user.id))
+
+
+@router.callback_query(F.data.startswith('picture_'))
+async def picture(call: CallbackQuery):
+    picture_id = int(call.data.split('_')[-1])
+
+    picture = get_picture_by_id(picture_id)
+
+    image = FSInputFile(picture.picture_url)
+    
+    await call.message.answer_photo(image, caption=f'{picture.title}\nPublished {picture.published}')

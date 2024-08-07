@@ -5,3 +5,4 @@ class CreatePicture(StatesGroup):
 
     picture_title = State()
     picture_quote = State()
+    
