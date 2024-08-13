@@ -20,6 +20,12 @@ async def start_handler(msg: Message, state: FSMContext):
     await state.set_state(CreatePicture.picture_quote)
 
 
+@router.callback_query(F.data == 'home')
+async def home_handler(call: CallbackQuery, state: FSMContext):
+    await call.message.answer(text.greeting_text, reply_markup=keyboards.start_keyboard)
+    await state.set_state(CreatePicture.picture_quote)
+
+
 @router.message(F.text, CreatePicture.picture_quote)
 async def generate_image_handler(msg: Message, state: FSMContext):
     text_for_gen = msg.text
@@ -40,7 +46,11 @@ async def name_generated_picture(msg: Message, state: FSMContext):
 
     create_picture_db(title, data['image'], msg.from_user.id)
 
-    await msg.answer_photo(image, caption=text.named_picture_caption.format(title))
+    await msg.answer_photo(
+        image,
+        caption=text.named_picture_caption.format(title),
+        reply_markup=keyboards.home_keyboard
+    )
     await state.set_state(CreatePicture.picture_quote)
 
 
@@ -57,4 +67,9 @@ async def picture(call: CallbackQuery):
 
     image = FSInputFile(picture.picture_url)
     
-    await call.message.answer_photo(image, caption=f'{picture.title}\nPublished {picture.published}')
+    await call.message.answer_photo(
+        image,
+        caption=f'{picture.title}\nPublished {picture.published}',
+        reply_markup=keyboards.home_keyboard    
+    )
+

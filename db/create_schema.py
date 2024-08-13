@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, String, Date, Column, BigInteger
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from datetime import date
 
 from .connection import engine

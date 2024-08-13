@@ -3,10 +3,13 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from db.scripts import get_user_pictures
 
 
+home_keyboard_markup = [
+    [InlineKeyboardButton(text='Home', callback_data='home')]
+]
+
+home_keyboard = InlineKeyboardMarkup(inline_keyboard=home_keyboard_markup)
+
 start_kb_markup = [
-    [
-        InlineKeyboardButton(text='Rate pictures', callback_data='rate_pictures')
-    ],
     [
         InlineKeyboardButton(text='My pictures', callback_data='list_pictures')
     ]
@@ -30,7 +33,7 @@ def my_pictures_keyboard_builder(user_id):
     builder.row(
         InlineKeyboardButton(
             text='Home',
-            callback_data=f'back_to_home'
+            callback_data='home'
         )
     )
 

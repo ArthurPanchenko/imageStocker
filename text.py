@@ -1,6 +1,6 @@
-greeting_text = 'Welcome to ImageStocker! \nWrite down a quote to create an image. \nOr you can rate uploaded images by pressing button "Rate images"'
+greeting_text = 'Welcome to ImageStocker! \nWrite down a quote to create an Image.'
 
-generated_picture_caption = 'Awesome! \nHow do you want to name this image?'
-named_picture_caption = 'This image name is: {} \nDo you want to upload it? \n(Aware you can upload only 1 image a day)'
+generated_picture_caption = 'Awesome! \nHow do you want to name this Image?'
+named_picture_caption = 'This Image name is: {}'
 
-my_pictures_text = 'List of your Pictures'
+my_pictures_text = 'List of your Images'

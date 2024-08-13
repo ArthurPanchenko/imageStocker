@@ -2,7 +2,7 @@ import logging
 import asyncio
 
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
+from aiogram.types import BotCommand
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import BOT_TOKEN
